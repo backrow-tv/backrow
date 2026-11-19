@@ -1,5 +1,4 @@
 # Continuous integration: every push and PR must build, lint and pass unit tests.
-# Session 1 adds the Licensee license-check task to the gradle step.
 # Before the first release, pin each `uses:` to a commit SHA (ADR-0007).
 name: CI
 
@@ -29,10 +28,16 @@ jobs:
 
       - uses: android-actions/setup-android@v3
 
+      # validate-wrappers checks gradle-wrapper.jar against Gradle's published checksums,
+      # so a tampered wrapper in a PR fails here before it runs.
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          validate-wrappers: true
 
-      - name: Build, lint, unit tests
-        run: ./gradlew --no-daemon --stacktrace lint testDebugUnitTest assembleDebug
+      # licensee fails the build on any dependency license outside the allow-list
+      # in app/build.gradle.kts (ADR-0002, ADR-0011).
+      - name: Build, lint, unit tests, license check
+        run: ./gradlew --no-daemon --stacktrace lint testDebugUnitTest licensee assembleDebug
 
       - name: Upload debug APK (for reviewers; not a release artifact)
         if: success()

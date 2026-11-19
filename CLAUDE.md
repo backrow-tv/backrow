@@ -97,9 +97,10 @@ When copying anything non-trivial from a permissive source, keep its license hea
 
 ```
 ./gradlew assembleDebug                      # build
-./gradlew testDebugUnitTest                  # unit tests
+./gradlew testDebugUnitTest                  # unit tests (JVM modules alias this to `test`)
 ./gradlew lint                               # Android lint
-./gradlew licensee                           # dependency license check (task name may vary by plugin version)
+./gradlew licensee                           # dependency license check (report: app/build/reports/licensee/)
+./gradlew :app:connectedDebugAndroidTest     # Compose UI tests on a connected TV or emulator
 adb connect <tv-ip>:5555                     # once per TV
 ./gradlew :app:installDebug                  # install on the connected TV
 adb shell am start -n dk.backrow.debug/dk.backrow.MainActivity
