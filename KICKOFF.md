@@ -29,11 +29,14 @@ Answer its questions (mainly which test devices you own).
 > Scaffold the Backrow Android project exactly as described in CLAUDE.md and ADR-0004. Plan first and wait for my approval before touching files. Requirements:
 > - Kotlin DSL, Gradle version catalog, JDK 21 toolchain, latest stable AGP/Gradle/Kotlin, minSdk 22 (provisional), targetSdk and compileSdk latest stable, core library desugaring.
 > - Modules: :app, :core:model, :core:innertube, :core:player, :core:sponsorblock, :core:data, each with a placeholder class and one passing unit test. :core:innertube, :core:sponsorblock and :core:model must be plain Kotlin/JVM modules with no Android dependency.
-> - :app: Compose for TV. A Home screen with three horizontal rows of twelve placeholder cards, a visible focus state, focus restored to the previous card when returning to Home, a Settings screen opened by the Menu key, the LEANBACK_LAUNCHER intent filter and a TV banner so the app appears in the Fire TV and Google TV launchers. Debug builds use the .debug applicationId suffix.
-> - The Licensee Gradle plugin (app.cash.licensee) with an allow-list of Apache-2.0, MIT, BSD-2-Clause, BSD-3-Clause, ISC, EPL-1.0, EPL-2.0, MPL-2.0 and Unlicense, failing the build on anything else. Wire it into .github/workflows/ci.yml.
+> - :app: Compose for TV. A Home screen with three horizontal rows of twelve placeholder cards, a visible focus state, focus restored to the previous card when returning to Home, a Settings screen reached with the D-pad through a focusable gear entry in a top bar or side rail (the Fire TV Menu key is only a shortcut to it; Google TV remotes have no Menu key), navigation with navigation-compose (ADR-0010), the LEANBACK_LAUNCHER intent filter and a TV banner so the app appears in the Fire TV and Google TV launchers. Debug builds use the .debug applicationId suffix.
+> - The Licensee Gradle plugin (app.cash.licensee) with an allow-list of Apache-2.0, MIT, BSD-2-Clause, BSD-3-Clause, ISC and Unlicense, failing the build on anything else (licenses declared only by URL are allowed one artifact at a time, with a comment naming it). Wire it and Gradle wrapper validation into .github/workflows/ci.yml.
+> - A unit test that fails if any file under src/test/resources contains visitor data, cookies, authorization headers or tokens.
 > - A proper Android .gitignore that also ignores reference/.
 > - Clone the four reference repositories listed in CLAUDE.md into reference/ and report each one's LICENSE file.
 > When done, install the app on both test devices with adb, measure cold start on the weak device, and write the numbers into docs/DEVICE-QUIRKS.md.
+
+If no physical device is connected, Claude Code uses two Android TV emulators instead (API 22 with 1 GB RAM as the weak one, latest stable API as the strong one) and labels every measurement as emulator. Emulator numbers do not settle ADR-0006.
 
 Acceptance: CI is green on GitHub; the app shows in both launchers; focus is never lost; cold-start numbers are in `docs/DEVICE-QUIRKS.md`.
 

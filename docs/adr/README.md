@@ -12,6 +12,8 @@ An ADR records one decision, the context that forced it, and its consequences, s
 | [0006](0006-minsdk-hardware-floor.md) | minSdk and hardware floor | Proposed (decided after the Session 2 spike) |
 | [0007](0007-release-signing-canary-pipeline.md) | Release, signing and canary pipeline | Accepted |
 | [0008](0008-sponsorblock-integration.md) | SponsorBlock integration | Accepted |
+| 0009 | Player JavaScript execution (signature / n-parameter) | Reserved (written only if the Session 2 spike needs it) |
+| [0010](0010-navigation-compose.md) | Navigation with navigation-compose | Accepted |
 
 ## Template
 
