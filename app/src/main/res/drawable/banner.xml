@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 The Backrow contributors
+     SPDX-License-Identifier: Apache-2.0 -->
+<!-- TV launcher banner (320x180): original "Backrow" wordmark, no play-button shapes, no red (ADR-0001).
+     VectorRaster is ignored: the launcher rasterises the banner once, and 320x180 is the required size. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180"
+    tools:ignore="VectorRaster">
+    <path
+        android:fillColor="#FF12161F"
+        android:pathData="M0,0 H320 V180 H0 Z" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFEDE7DC"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M31,65 V115 M31,65 H49 A12.5,12.5 0 0 1 49,90 H31 M49,90 A12.5,12.5 0 0 1 49,115 H31 M69,115 L84,65 L99,115 M75,98 H93 M135,70 A18,25 0 1 0 135,110 M145,65 V115 M173,65 L148,92 M156,84 L174,115 M183,115 V65 H199 A12.5,12.5 0 0 1 199,90 H183 M197,90 L211,115 M236,65 A15,25 0 1 1 236,115 A15,25 0 1 1 236,65 Z M259,65 L266,115 L274,82 L282,115 L289,65" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFF2B84B"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M31,134 H289" />
+</vector>

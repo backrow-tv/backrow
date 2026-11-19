@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 The Backrow contributors
+     SPDX-License-Identifier: Apache-2.0 -->
+<!-- Launcher icon: the wordmark's "B" with the amber rule, on the banner background. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#FF12161F"
+        android:pathData="M8,0 H40 A8,8 0 0 1 48,8 V40 A8,8 0 0 1 40,48 H8 A8,8 0 0 1 0,40 V8 A8,8 0 0 1 8,0 Z" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFEDE7DC"
+        android:strokeWidth="3.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M16,10 V34 M16,10 H25 A6,6 0 0 1 25,22 H16 M25,22 A6,6 0 0 1 25,34 H16" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFF2B84B"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M14,40 H34" />
+</vector>
