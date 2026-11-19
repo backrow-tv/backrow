@@ -1,0 +1,54 @@
+name: Bug report
+description: Something is broken on a supported device
+labels: [bug, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check docs/COMPATIBILITY.md first. Unsupported devices (Vega OS, Tizen, webOS, phones) are closed without triage.
+  - type: input
+    id: device
+    attributes:
+      label: Device model
+      placeholder: e.g. Fire TV Stick 4K (2018)
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Fire OS / Android version
+      placeholder: e.g. Fire OS 6.2.9.7 / Android 12
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Backrow version and channel
+      placeholder: e.g. 0.3.1 beta
+    validations:
+      required: true
+  - type: dropdown
+    id: account
+    attributes:
+      label: Signed in?
+      options: [Anonymous, Signed in]
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: 1. Open Home 2. Select ... 3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs (`adb logcat -s Backrow`), if you can
+      render: text

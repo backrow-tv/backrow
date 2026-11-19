@@ -1,0 +1,31 @@
+name: Feature request
+description: Propose something within the roadmap, or argue for changing it
+labels: [enhancement, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read docs/ROADMAP.md first. Requests for listed non-goals are closed with a link to it.
+  - type: dropdown
+    id: milestone
+    attributes:
+      label: Where does this fit?
+      options: [v1 (already listed), v1.x, v2, "It's not on the roadmap — I'm proposing a change"]
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does it solve, for whom?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour (as seen from the remote)
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered

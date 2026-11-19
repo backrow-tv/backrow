@@ -1,0 +1,36 @@
+# Reference clones — never committed (see CLAUDE.md)
+/reference/
+
+# Gradle / Android
+.gradle/
+build/
+*/build/
+local.properties
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Signing — never committed
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.kotlin/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test / tooling output
+*.log
+/out/
