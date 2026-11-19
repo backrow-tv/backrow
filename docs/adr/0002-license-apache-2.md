@@ -1,5 +1,5 @@
 # ADR-0002: License — Apache License 2.0
-2026-09-22 · Accepted
+2026-09-22 · Accepted · note 2026-11-19: ADR-0011 allows one exception, `desugar_jdk_libs` (GPL-2.0 with Classpath Exception)
 
 ## Context
 The maintainer wants a permissive license: anyone may use, modify and redistribute the code as long as attribution is kept. Candidate reference codebases are MIT (SmartTube, MediaServiceCore, YouTube.js), Unlicense (yt-dlp), GPLv3 (NewPipe, NewPipeExtractor) and AGPLv3 (Invidious, Piped). Apache-2.0 adds a patent grant and a NOTICE mechanism that MIT lacks, which matters once there are several contributors.

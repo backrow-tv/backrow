@@ -52,7 +52,7 @@ Dependencies point inward: `:app → :core:*`; `:core:*` never depends on `:app`
 
 ## Hard rules
 
-1. **Licensing.** No GPL, AGPL or LGPL dependencies, ever. Do not copy code from NewPipe, NewPipeExtractor, Invidious, Piped or any GPL/AGPL project, not even "adapted". Permissively licensed references only (below). The Licensee plugin's allow-list is the gate: **Apache-2.0, MIT, BSD-2-Clause, BSD-3-Clause, ISC, Unlicense**, nothing else. If a needed dependency has any other license, stop and ask; do not widen the list without an ADR. A license declared only by URL is allowed one artifact at a time, each entry with a comment naming the artifact.
+1. **Licensing.** No GPL, AGPL or LGPL dependencies, ever. The single exception is `com.android.tools:desugar_jdk_libs` (GPL-2.0 with Classpath Exception), allowed per artifact by ADR-0011; it is not a precedent. Do not copy code from NewPipe, NewPipeExtractor, Invidious, Piped or any GPL/AGPL project, not even "adapted". Permissively licensed references only (below). The Licensee plugin's allow-list is the gate: **Apache-2.0, MIT, BSD-2-Clause, BSD-3-Clause, ISC, Unlicense**, nothing else. If a needed dependency has any other license, stop and ask; do not widen the list without an ADR. A license declared only by URL is allowed one artifact at a time, each entry with a comment naming the artifact.
 2. **No Google proprietary libraries:** no Play Services, Firebase, Play Integrity, Cast SDK.
 3. **No vendored or forked libraries** in the repo. Published artifacts only, pinned in the version catalog. If a patch is needed, upstream it.
 4. **Never write InnerTube request/response code from memory.** Work from the clones in `reference/` (gitignored) and state which file you based it on.
