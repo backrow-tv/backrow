@@ -28,7 +28,7 @@ An open-source (Apache-2.0) media client for YouTube on **Android TV, Google TV 
 - Playback: **Media3 ExoPlayer**, DASH.
 - DI: Koin. Async: coroutines + Flow. Networking: OkHttp + kotlinx.serialization. Images: Coil 3. Persistence: Room + DataStore. No Retrofit, Gson, RxJava, Hilt.
 - Tests: JUnit 4 + kotlinx-coroutines-test + MockWebServer for JVM tests; Compose UI tests on the Android TV emulator for critical flows.
-- `minSdk = 22` (provisional, ADR-0006), `targetSdk` and `compileSdk` = latest stable, core library desugaring on.
+- `minSdk = 25` (Android 7.1 / Fire OS 6, ADR-0006), `targetSdk` and `compileSdk` = latest stable, core library desugaring on.
 - Versions: latest **stable** releases only (never alpha, beta or RC), resolved from the live release pages, not from memory. List the chosen versions in the PR description.
 - **No dependencies beyond this list without asking first,** including small or debug-only ones (no LeakCanary, no Timber).
 
@@ -61,7 +61,7 @@ Dependencies point inward: `:app → :core:*`; `:core:*` never depends on `:app`
 7. Any change to `:core:innertube`, the DASH manifest builder, token storage or the updater ships with tests in the same PR.
 8. **Remote-only navigation.** Every screen and control is reachable with D-pad, Select and Back. Verify initial focus, focus order, focus restoration when returning, and that focus is never lost. Many remotes (Chromecast with Google TV, Google TV Streamer) have no Menu key, so nothing may depend on it: Settings is reached through a focusable gear entry in the top bar or side rail, and the Fire TV Menu key is only a shortcut to the same places. Long-press Select opens context menus.
 9. All user-facing text lives in `strings.xml`. No hardcoded UI strings.
-10. **Performance budget** on the weak reference device (Fire TV Stick 2nd gen, 1 GB RAM): cold start to interactive Home under 3 s, no visible jank scrolling a row of 20 thumbnails, playback starts under 2 s after selecting a video on a 50 Mbit connection. Measure before saying "done".
+10. **Performance budget** on the weak reference device (Fire TV Stick Lite / 3rd gen, Fire OS 7, 1 GB RAM): cold start to interactive Home under 3 s, no visible jank scrolling a row of 20 thumbnails, playback starts under 2 s after selecting a video on a 50 Mbit connection. Measure before saying "done".
 11. **Privacy.** No analytics, no telemetry, no crash reporting without explicit opt-in. Anonymous mode must fully support browse, search, playback and SponsorBlock.
 12. Do not add features outside `docs/ROADMAP.md` without asking.
 13. New module, new major dependency, or a change to `minSdk` requires an ADR in `docs/adr/` before code.
@@ -83,7 +83,7 @@ When copying anything non-trivial from a permissive source, keep its license hea
 - **Vertical slices.** Each PR delivers something a user can see or a test can prove. No big-bang refactors.
 - **Small PRs, conventional commits** (`feat:`, `fix:`, `chore:`, `docs:`, `test:`, `refactor:`), one concern per PR.
 - **Git:** one branch and one PR per slice; never push to `main`. Commit with `git commit -s` under the maintainer's git identity (the maintainer reviews every diff, so the DCO sign-off is theirs) and keep the `Co-Authored-By: Claude` trailer.
-- **Definition of done:** `./gradlew lint testDebugUnitTest assembleDebug` passes, the app was installed via adb on a real device (or, only when none is connected, on the Android TV emulator), the acceptance criteria were checked by hand, and anything surprising went into `docs/DEVICE-QUIRKS.md`. Label every measurement there as **physical** or **emulator**; emulator numbers never settle ADR-0006.
+- **Definition of done:** `./gradlew lint testDebugUnitTest assembleDebug` passes, the app was installed via adb on a real device (or, only when none is connected, on the Android TV emulator), the acceptance criteria were checked by hand, and anything surprising went into `docs/DEVICE-QUIRKS.md`. Label every measurement there as **physical** or **emulator**; emulator numbers never prove the performance budget.
 - When YouTube breaks something, the fix goes into `:core:innertube` with a fixture reproducing the new response and a dated entry in `docs/INNERTUBE-CHANGELOG.md`.
 - **Logging:** a small logging interface in `:core:model` (pure-JVM modules cannot use `android.util.Log`), wired in `:app` to `android.util.Log` with tag `Backrow`, so `adb logcat -s Backrow` shows the app's logs. No Timber.
 - **File headers:** every source file (Kotlin, Gradle scripts, XML resources where comments are allowed) starts with:

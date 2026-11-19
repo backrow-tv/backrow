@@ -9,7 +9,7 @@ An ADR records one decision, the context that forced it, and its consequences, s
 | [0003](0003-platform-scope-v1.md) | Platform scope for v1 | Accepted |
 | [0004](0004-tech-stack.md) | Tech stack | Accepted |
 | [0005](0005-youtube-access-layer.md) | YouTube access layer | Accepted |
-| [0006](0006-minsdk-hardware-floor.md) | minSdk and hardware floor | Proposed (decided after the Session 2 spike) |
+| [0006](0006-minsdk-hardware-floor.md) | minSdk and hardware floor | Accepted (minSdk 25) |
 | [0007](0007-release-signing-canary-pipeline.md) | Release, signing and canary pipeline | Accepted |
 | [0008](0008-sponsorblock-integration.md) | SponsorBlock integration | Accepted |
 | 0009 | Player JavaScript execution (signature / n-parameter) | Reserved (written only if the Session 2 spike needs it) |

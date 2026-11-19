@@ -1,5 +1,5 @@
 # ADR-0004: Tech stack
-2026-09-22 · Accepted
+2026-09-22 · Accepted · note 2026-11-19: the provisional `minSdk` 22 below was settled at 25 by ADR-0006; navigation is added by ADR-0010
 
 ## Context
 SmartTube is locked to a 2019-era ExoPlayer fork, Leanback 1.0, Java, and a JDK 14 build requirement, all vendored into the repo. The goal is a modern toolchain that still runs on 2016-era sticks. Toolchain age and device age are independent: a current JDK, Kotlin and AGP can compile for API 22.
