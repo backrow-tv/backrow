@@ -9,6 +9,11 @@ YouTube. "YouTube" is a trademark of Google LLC.
 SponsorBlock segment data is provided by the SponsorBlock project
 (https://sponsor.ajay.app) under its own attribution/non-commercial license.
 
+The Android app bundles desugar_jdk_libs (com.android.tools:desugar_jdk_libs),
+OpenJDK class library code repackaged by Google, licensed under the GNU General
+Public License, version 2, with the Classpath Exception. Source:
+https://github.com/google/desugar_jdk_libs (see docs/adr/0011).
+
 Third-party code copied into this repository (permissive licenses only)
 is listed below with its origin and license. Keep this list current.
 

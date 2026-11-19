@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 The Backrow contributors
+     SPDX-License-Identifier: Apache-2.0 -->
+<resources>
+    <string name="app_name">Backrow</string>
+    <!-- Shown in the Home top bar. -->
+    <string name="app_name_wordmark">Backrow</string>
+
+    <string name="home_open_settings">Open settings</string>
+    <!-- Placeholder content until Home shows real videos. %1$d is a 1-based number. -->
+    <string name="home_row_title">Placeholder row %1$d</string>
+    <string name="home_card_title">Video %1$d</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_playback">Playback</string>
+    <string name="settings_section_sponsorblock">SponsorBlock</string>
+    <string name="settings_section_privacy">Privacy</string>
+    <string name="settings_section_about">About</string>
+    <string name="settings_coming_later">Coming in a later version</string>
+</resources>

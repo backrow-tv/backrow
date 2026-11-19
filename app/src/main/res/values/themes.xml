@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 The Backrow contributors
+     SPDX-License-Identifier: Apache-2.0 -->
+<resources>
+    <!-- Window theme only: dark window background so cold start never flashes white.
+         All UI is Compose (ADR-0004). -->
+    <style name="Theme.Backrow" parent="@android:style/Theme.DeviceDefault.NoActionBar">
+        <item name="android:windowBackground">@color/backrow_background</item>
+    </style>
+</resources>

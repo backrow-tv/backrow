@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 The Backrow contributors
+     SPDX-License-Identifier: Apache-2.0 -->
+<resources>
+    <!-- Distinguishes the debug build in the launcher when both are installed. -->
+    <string name="app_name">Backrow Debug</string>
+</resources>
