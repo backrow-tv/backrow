@@ -1,5 +1,5 @@
 # Continuous integration: every push and PR must build, lint and pass unit tests.
-# Before the first release, pin each `uses:` to a commit SHA (ADR-0007).
+# Every `uses:` is pinned to a commit SHA (ADR-0007); the comment names the release.
 name: CI
 
 on:
@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
         with:
           distribution: temurin
           java-version: "21"
@@ -29,13 +29,13 @@ jobs:
       # The action's default package list includes the legacy "tools" package, which the
       # SDK repository no longer serves, so sdkmanager exits 1. Install only platform-tools;
       # AGP downloads the exact platform and build-tools it needs (licences are accepted here).
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
         with:
           packages: platform-tools
 
       # validate-wrappers checks gradle-wrapper.jar against Gradle's published checksums,
       # so a tampered wrapper in a PR fails here before it runs.
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
         with:
           validate-wrappers: true
 
@@ -46,7 +46,7 @@ jobs:
 
       - name: Upload debug APK (for reviewers; not a release artifact)
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: backrow-debug-apk
           path: app/build/outputs/apk/debug/*.apk

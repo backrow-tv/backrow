@@ -5,9 +5,9 @@ SPDX-License-Identifier: Apache-2.0
 
 # Release process (proposal)
 
-**Status: proposal for review (Session 3, ADR-0007 Part B). Nothing here is implemented yet.**
-After review, the workflow is implemented in its own PR, and the keystore is created by the
-maintainer following §4. No release is tagged before both are done (KICKOFF.md §6).
+**Status: implemented** (`.github/workflows/release.yml`). What is left is the maintainer's: the
+repository settings in §3.2 and the keystore in §4. No release is tagged before both are done
+(KICKOFF.md §6). Decisions on the review's open questions are in §6.
 
 ## 1. Why this is strict
 
@@ -67,8 +67,9 @@ tag vX.Y.Z[-beta.N]
   ever go up, and a stable release always updates the betas before it.
 
 ### 2.2 Job `sign` (the only job that sees secrets)
-- `environment: release`. The environment has the maintainer as required reviewer and is limited
-  to the protected `v*` tags (deployment branch/tag policy). Its secrets:
+- `environment: release`. The environment has the maintainer as required reviewer, and its
+  deployment policy allows only the protected `v*` tags and the `main` branch (`main` for the dry
+  run, §4 step 10). Its secrets:
 
   | Secret | Content |
   |---|---|
@@ -97,10 +98,10 @@ tag vX.Y.Z[-beta.N]
 
 ### 2.3 Channels
 - **Beta**: a prerelease, tagged `vX.Y.Z-beta.N`. ADR-0007 says every merged slice that passes CI
-  goes to beta. Proposal: the maintainer tags a beta by hand after merging a slice
-  (`git tag -s vX.Y.Z-beta.N`, `git push origin vX.Y.Z-beta.N`). Tagging automatically from
-  `main` is possible (a `workflow_run` on CI success), but it would make the approval in §2.2 a
-  daily chore. **Open question for the maintainer.**
+  goes to beta. Decision: the maintainer tags a beta by hand after merging a slice
+  (`git tag -a vX.Y.Z-beta.N -m "Backrow X.Y.Z-beta.N"`, `git push origin vX.Y.Z-beta.N`).
+  Tagging automatically from `main` is possible (a `workflow_run` on CI success), but it would
+  make the approval in §2.2 a daily chore.
 - **Stable**: a plain `vX.Y.Z` tag on a commit that already shipped as a beta and was
   hand-tested on the device matrix (docs/COMPATIBILITY.md).
 - Both channels use one applicationId (`dk.backrow`) and one key, so users can switch channels
@@ -187,9 +188,9 @@ openssl pkcs12 -export -name backrow \
 
 shred -u backrow-release.key      # the unencrypted key is no longer needed
 ```
-OpenSSL 3 writes PKCS#12 with AES-256 and PBKDF2. JDK 21's `apksigner` reads that. If the
-dry run in step 10 fails on the keystore format, repeat from step 5 adding `-legacy` to the
-`pkcs12` command.
+OpenSSL 3 writes PKCS#12 with AES-256 and PBKDF2, which `apksigner` on JDK 21 reads. Checked on
+2026-11-24 with a throwaway key made with exactly these commands (OpenSSL 3.5): signing and the
+digest check passed. No `-legacy` needed.
 
 **Step 6 — record the certificate digest (public).**
 ```sh
@@ -227,9 +228,10 @@ implementation PR's checklist hasn't). Add:
 Then sign out of GitHub and the password manager in Firefox.
 
 **Step 10 — verify before you power off.** From another device (your laptop, normally booted),
-run the implementation PR's `release-dry-run` workflow. It is `workflow_dispatch` only, uses the
-`release` environment, signs a debug build with the secrets, checks the certificate digest
-against `RELEASE_CERT_SHA256`, and publishes nothing. If it fails, you still have everything in
+start the **Release** workflow by hand on `main` (Actions → Release → Run workflow, or
+`gh workflow run release.yml --ref main`) and approve it. Run by hand it is a dry run: it builds
+a release APK twice, signs it in the `release` environment with the real secrets, checks the
+certificate digest against `RELEASE_CERT_SHA256`, and uploads and publishes nothing. If it fails, you still have everything in
 RAM to fix the secrets. If the live machine has already been switched off, the password manager
 backup is enough to redo step 9 from another live session.
 
@@ -263,8 +265,11 @@ If the key, the maintainer's GitHub account or a release might be compromised:
    leaked, so it is for planned rotation, not for compromise.
 5. Publish indicators (hashes, attestation IDs, dates) and a post-mortem.
 
-## 6. Open questions for review
-1. Beta tagging: manual tags (proposed) or automatic from `main` after CI (§2.3)?
-2. Password manager: does yours support file attachments (Bitwarden, 1Password and KeePassXC do)?
-   If not, the fallback is a second USB stick holding an `age`-encrypted copy, kept offline.
-3. Should stable releases also need a second human approval once there is a second maintainer?
+## 6. Decisions on the review's open questions (2026-11-24)
+1. **Beta tagging:** manual tags (§2.3). Automatic tagging can come later if the approval step
+   turns out cheap enough.
+2. **Password manager attachments:** assumed (Bitwarden, 1Password and KeePassXC support them).
+   If yours does not, the fallback is a second USB stick holding an `age`-encrypted copy, kept
+   offline. Say so before the ceremony; it changes step 8.
+3. **Second approver for stable:** not now, with one maintainer. Add the second maintainer as a
+   required reviewer of the `release` environment when there is one.
