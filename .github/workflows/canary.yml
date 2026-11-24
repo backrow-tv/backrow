@@ -6,6 +6,10 @@
 # EJS challenge solving, the first kilobyte of a solved stream) and opens or updates an issue
 # labelled youtube-breakage when they fail, so breakage is found before users report it.
 #
+# GitHub's runners have datacenter IPs, which YouTube often bot-checks ("Sign in to confirm you're
+# not a bot") even with valid visitor data. A run where only that happened is "inconclusive": a
+# warning in the run, no issue. The /tv session and player-JS tests still count in such a run.
+#
 # Every `uses:` is pinned to a commit SHA (ADR-0007); the comment names the release it is.
 name: Canary
 
@@ -28,6 +32,7 @@ jobs:
     timeout-minutes: 20
     outputs:
       summary: ${{ steps.summary.outputs.summary }}
+      verdict: ${{ steps.summary.outputs.verdict }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -47,23 +52,35 @@ jobs:
         with:
           validate-wrappers: true
 
-      # A pure-JVM task: no Android SDK needed.
+      # A pure-JVM task: no Android SDK needed. Its pass/fail is not the canary's verdict: the
+      # summary step decides, because a bot check on the runner's IP is inconclusive, not broken.
       - name: Live YouTube tests
+        id: live
+        continue-on-error: true
         env:
           BACKROW_LIVE_TESTS: "1"
         run: ./gradlew --no-daemon --stacktrace :core:innertube:liveTest
 
-      # Also fails the job if every test was skipped, so a canary that checked nothing is not green.
+      # Verdict: pass, inconclusive (only bot checks on the runner's IP failed) or fail (anything
+      # else failed, every test was skipped, or none ran). Only "fail" fails the job.
       - name: Summarise results
         id: summary
         if: always()
+        env:
+          GRADLE_OUTCOME: ${{ steps.live.outcome }}
         run: |
-          status=0
-          python3 .github/scripts/canary_summary.py core/innertube/build/test-results/liveTest summary.md || status=$?
+          verdict=$(python3 .github/scripts/canary_summary.py core/innertube/build/test-results/liveTest summary.md) || verdict=fail
+          # Tests all passed but Gradle still failed (e.g. after the tests): not a pass.
+          if [ "$verdict" = "pass" ] && [ "$GRADLE_OUTCOME" != "success" ]; then verdict=fail; fi
           cat summary.md >> "$GITHUB_STEP_SUMMARY"
+          echo "verdict=$verdict" >> "$GITHUB_OUTPUT"
           delimiter="EOF_$(openssl rand -hex 16)"
           { echo "summary<<$delimiter"; cat summary.md; echo "$delimiter"; } >> "$GITHUB_OUTPUT"
-          exit $status
+          case "$verdict" in
+            pass) ;;
+            inconclusive) echo "::warning::Canary inconclusive: YouTube bot-checked the runner's IP. No issue filed." ;;
+            *) exit 1 ;;
+          esac
 
   # A separate job, so the token that can write issues never sits next to the Gradle build.
   report:
@@ -76,7 +93,8 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
-      RESULT: ${{ needs.live.result }}
+      # Empty when the job failed before the summary step (e.g. setup): counted as a failure.
+      VERDICT: ${{ needs.live.outputs.verdict }}
       SUMMARY: ${{ needs.live.outputs.summary }}
       RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
       LABEL: youtube-breakage
@@ -87,7 +105,11 @@ jobs:
             --description "The nightly canary found YouTube breaking the player path" --force
           issue=$(gh issue list --label "$LABEL" --state open --limit 1 --json number --jq '.[0].number // empty')
 
-          if [ "$RESULT" = "failure" ]; then
+          if [ "$VERDICT" = "inconclusive" ]; then
+            # Neither breakage nor recovery: say nothing on the issue.
+            exit 0
+          fi
+          if [ "$VERDICT" != "pass" ]; then
             {
               echo "The nightly canary failed on $(date -u +%Y-%m-%d) at commit \`${GITHUB_SHA::7}\`."
               echo

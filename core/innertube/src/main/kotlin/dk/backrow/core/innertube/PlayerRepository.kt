@@ -25,9 +25,16 @@ interface PlayerRepository {
     suspend fun warmUp()
 }
 
-/** No client profile in the chain could play the video. [attempts] says why, one line per profile. */
-class PlaybackUnavailableException(val videoId: String, val attempts: List<String>) :
-    RuntimeException("No playable streams for $videoId: ${attempts.joinToString("; ")}")
+/**
+ * No client profile in the chain could play the video. [attempts] says why, one line per profile.
+ * [botCheckOnEveryProfile] is true when every profile got YouTube's "Sign in to confirm you're not
+ * a bot": YouTube is refusing this network or session, not this video.
+ */
+class PlaybackUnavailableException(
+    val videoId: String,
+    val attempts: List<String>,
+    val botCheckOnEveryProfile: Boolean = false,
+) : RuntimeException("No playable streams for $videoId: ${attempts.joinToString("; ")}")
 
 /** Builds the app's [PlayerRepository]. */
 object Innertube {
@@ -73,7 +80,7 @@ internal class InnertubePlayerRepository(
     override suspend fun streams(videoId: String): StreamInfo {
         require(VIDEO_ID.matches(videoId)) { "not a video id" }
         val attempts = mutableListOf<String>()
-        var botCheckSeen = false
+        var botChecks = 0
         for (profile in chain) {
             try {
                 when (val result = tryProfile(profile, videoId)) {
@@ -82,7 +89,7 @@ internal class InnertubePlayerRepository(
                         return result.info
                     }
                     is Attempt.Failure -> {
-                        if (result.botCheck) botCheckSeen = true
+                        if (result.botCheck) botChecks++
                         attempts += "${profile.key}: ${result.reason}"
                     }
                 }
@@ -94,8 +101,8 @@ internal class InnertubePlayerRepository(
             logger.warn("Profile ${profile.key} failed for $videoId: ${attempts.last()}")
         }
         // A bot check on every profile usually means the visitor data went stale; the next call starts a new session.
-        if (botCheckSeen) sessionMutex.withLock { session = null }
-        throw PlaybackUnavailableException(videoId, attempts)
+        if (botChecks > 0) sessionMutex.withLock { session = null }
+        throw PlaybackUnavailableException(videoId, attempts, botCheckOnEveryProfile = botChecks == chain.size)
     }
 
     private sealed interface Attempt {

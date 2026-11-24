@@ -22,3 +22,10 @@ Dated notes on every YouTube-side change that required a fix in `:core:innertube
 - **What:** for a music video with `signatureCipher` formats, URLs with both `n` and `sig` solved returned 403 in the afternoon, with both player builds, while the same steps returned 200 two hours earlier and unciphered videos kept working. Cause unknown.
 - **Impact:** such a video fails at playback with an HTTP error. The fallback chain does not catch this, because the failure happens after `streams()` succeeded. Follow-up: check one solved URL before returning streams, so a 403 falls back to the next profile.
 
+
+## 2026-11-24 · Bot check on GitHub's runner IPs (canary inconclusive, not broken)
+
+- **What:** the first canary run on GitHub Actions got `LOGIN_REQUIRED` "Sign in to confirm you're not a bot" for both `tv_samsung` and `visionos`, with valid visitor data from `/tv`. The same tests passed 6/6 from the maintainer's home network the same day. The `/tv` session, the player JS download and EJS solving passed on the runner. YouTube bot-checks datacenter IPs; Backrow's users are on home networks.
+- **Noticed by:** the canary, issue backrow-tv/backrow#6 (a false alarm).
+- **Change:** `PlaybackUnavailableException.botCheckOnEveryProfile` says when every profile in the chain got the bot check (unit test in `PlayerRepositoryTest`, fixture `tv_samsung-login-required.json`). The live playback tests report that as `INCONCLUSIVE:`, and `canary.yml` treats a run with no other failure as inconclusive: a warning in the run, no issue. Any other failure still files one.
+- **Limit:** while the runner's IP is bot-checked, the canary does not test the player request or the stream fetch. Running it from a residential network (a self-hosted runner) would close that gap. If YouTube starts bot-checking home networks too, users will notice before the canary does.
