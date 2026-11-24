@@ -6,6 +6,7 @@ package dk.backrow.core.innertube.live
 import dk.backrow.core.innertube.ClientProfile
 import dk.backrow.core.innertube.ClientProfiles
 import dk.backrow.core.innertube.InnertubePlayerRepository
+import dk.backrow.core.innertube.PlaybackUnavailableException
 import dk.backrow.core.model.AdaptiveFormat
 import dk.backrow.core.model.StreamInfo
 import kotlinx.coroutines.runBlocking
@@ -100,6 +101,21 @@ class LivePlaybackTest(private val profileKey: String) {
                         ).streams(LiveYouTube.VIDEO_ID)
                     }
                 }
-            }.getOrElse { e -> throw AssertionError(RedactingLogger.redact("${profile.key}: ${e.message}"), e) }
+            }.getOrElse { e ->
+                val message = RedactingLogger.redact("${profile.key}: ${e.message}")
+                // GitHub's runners have datacenter IPs, which YouTube bot-checks even with valid
+                // visitor data; the same request passes from a home network. That says nothing
+                // about whether the player path works, so it is reported as inconclusive.
+                if (e is PlaybackUnavailableException && e.botCheckOnEveryProfile) {
+                    throw AssertionError("$INCONCLUSIVE bot check, probably the runner's IP. $message", e)
+                }
+                throw AssertionError(message, e)
+            }
+
+        /**
+         * Prefix of a failure that is not evidence of breakage. canary_summary.py looks for it;
+         * change both together.
+         */
+        const val INCONCLUSIVE = "INCONCLUSIVE:"
     }
 }

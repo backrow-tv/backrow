@@ -12,6 +12,7 @@ import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
@@ -123,12 +124,27 @@ class PlayerRepositoryTest {
                 assertEquals(2, e.attempts.size)
                 assertTrue(e.attempts[0].startsWith("tv_samsung: LOGIN_REQUIRED"))
                 assertTrue(e.attempts[1].startsWith("visionos: LOGIN_REQUIRED"))
+                assertTrue(e.botCheckOnEveryProfile)
             }
             assertEquals(1, youtube.count("/tv"))
 
             youtube.playerFixtures = mapOf("TVHTML5" to "tv_samsung-ok-n.json")
             repository.streams(VIDEO)
             assertEquals(2, youtube.count("/tv"))
+        }
+
+    @Test
+    fun `a bot check on only some profiles is not reported as a bot check on every profile`() =
+        runTest {
+            youtube.playerFixtures = mapOf("TVHTML5" to "tv-unplayable-reload.json") // visionos gets LOGIN_REQUIRED
+            try {
+                repository().streams(VIDEO)
+                fail("expected PlaybackUnavailableException")
+            } catch (e: PlaybackUnavailableException) {
+                assertEquals(2, e.attempts.size)
+                assertTrue(e.attempts[1].startsWith("visionos: LOGIN_REQUIRED"))
+                assertFalse(e.botCheckOnEveryProfile)
+            }
         }
 
     @Test
