@@ -7,3 +7,5 @@ gradlew text eol=lf
 *.jar binary
 *.png binary
 *.webp binary
+# Pinned third-party solver scripts (ADR-0009): byte-exact, hash-checked by a unit test.
+core/innertube/src/main/resources/dk/backrow/core/innertube/ejs/*.js -text

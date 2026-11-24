@@ -1,0 +1,695 @@
+{
+ "playabilityStatus": {
+  "status": "OK"
+ },
+ "streamingData": {
+  "expiresInSeconds": "21540",
+  "adaptiveFormats": [
+   {
+    "itag": 313,
+    "mimeType": "video/webm; codecs=\"vp9\"",
+    "bitrate": 18076636,
+    "averageBitrate": 13466333,
+    "width": 3840,
+    "height": 2160,
+    "fps": 25,
+    "quality": "hd2160",
+    "qualityLabel": "2160p",
+    "initRange": {
+     "start": "0",
+     "end": "220"
+    },
+    "indexRange": {
+     "start": "221",
+     "end": "893"
+    },
+    "contentLength": "358608461",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG313FIXTURESIG313FIXTURESIG313FIXTURESIG313FIXTURESIG313FIXTURESIG313FIXTURESIG313FIXTURESIG313FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D313%26source%3Dyoutube%26mime%3Dvideo%252Fwebm%26dur%3D213.040%26clen%3D358608461%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 401,
+    "mimeType": "video/mp4; codecs=\"av01.0.12M.08\"",
+    "bitrate": 17400774,
+    "averageBitrate": 9024958,
+    "width": 3840,
+    "height": 2160,
+    "fps": 25,
+    "quality": "hd2160",
+    "qualityLabel": "2160p",
+    "initRange": {
+     "start": "0",
+     "end": "700"
+    },
+    "indexRange": {
+     "start": "701",
+     "end": "1188"
+    },
+    "contentLength": "240334643",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG401FIXTURESIG401FIXTURESIG401FIXTURESIG401FIXTURESIG401FIXTURESIG401FIXTURESIG401FIXTURESIG401FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D401%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D240334643%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 271,
+    "mimeType": "video/webm; codecs=\"vp9\"",
+    "bitrate": 8978328,
+    "averageBitrate": 5674177,
+    "width": 2560,
+    "height": 1440,
+    "fps": 25,
+    "quality": "hd1440",
+    "qualityLabel": "1440p",
+    "initRange": {
+     "start": "0",
+     "end": "219"
+    },
+    "indexRange": {
+     "start": "220",
+     "end": "889"
+    },
+    "contentLength": "151103346",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG271FIXTURESIG271FIXTURESIG271FIXTURESIG271FIXTURESIG271FIXTURESIG271FIXTURESIG271FIXTURESIG271FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D271%26source%3Dyoutube%26mime%3Dvideo%252Fwebm%26dur%3D213.040%26clen%3D151103346%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 400,
+    "mimeType": "video/mp4; codecs=\"av01.0.12M.08\"",
+    "bitrate": 7755221,
+    "averageBitrate": 4587618,
+    "width": 2560,
+    "height": 1440,
+    "fps": 25,
+    "quality": "hd1440",
+    "qualityLabel": "1440p",
+    "initRange": {
+     "start": "0",
+     "end": "700"
+    },
+    "indexRange": {
+     "start": "701",
+     "end": "1188"
+    },
+    "contentLength": "122168277",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG400FIXTURESIG400FIXTURESIG400FIXTURESIG400FIXTURESIG400FIXTURESIG400FIXTURESIG400FIXTURESIG400FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D400%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D122168277%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 137,
+    "mimeType": "video/mp4; codecs=\"avc1.640028\"",
+    "bitrate": 4334157,
+    "averageBitrate": 3038377,
+    "width": 1920,
+    "height": 1080,
+    "fps": 25,
+    "quality": "hd1080",
+    "qualityLabel": "1080p",
+    "initRange": {
+     "start": "0",
+     "end": "741"
+    },
+    "indexRange": {
+     "start": "742",
+     "end": "1229"
+    },
+    "contentLength": "80911999",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "signatureCipher": "s=FIXTURESIG137FIXTURESIG137FIXTURESIG137FIXTURESIG137FIXTURESIG137FIXTURESIG137FIXTURESIG137FIXTURESIG137&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D137%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D80911999%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 248,
+    "mimeType": "video/webm; codecs=\"vp9\"",
+    "bitrate": 1549172,
+    "averageBitrate": 1158339,
+    "width": 1920,
+    "height": 1080,
+    "fps": 25,
+    "quality": "hd1080",
+    "qualityLabel": "1080p",
+    "initRange": {
+     "start": "0",
+     "end": "219"
+    },
+    "indexRange": {
+     "start": "220",
+     "end": "874"
+    },
+    "contentLength": "30846580",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG248FIXTURESIG248FIXTURESIG248FIXTURESIG248FIXTURESIG248FIXTURESIG248FIXTURESIG248FIXTURESIG248&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D248%26source%3Dyoutube%26mime%3Dvideo%252Fwebm%26dur%3D213.040%26clen%3D30846580%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 399,
+    "mimeType": "video/mp4; codecs=\"av01.0.08M.08\"",
+    "bitrate": 1594543,
+    "averageBitrate": 1142170,
+    "width": 1920,
+    "height": 1080,
+    "fps": 25,
+    "quality": "hd1080",
+    "qualityLabel": "1080p",
+    "initRange": {
+     "start": "0",
+     "end": "699"
+    },
+    "indexRange": {
+     "start": "700",
+     "end": "1187"
+    },
+    "contentLength": "30415996",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG399FIXTURESIG399FIXTURESIG399FIXTURESIG399FIXTURESIG399FIXTURESIG399FIXTURESIG399FIXTURESIG399&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D399%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D30415996%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 136,
+    "mimeType": "video/mp4; codecs=\"avc1.4D401F\"",
+    "bitrate": 1058310,
+    "averageBitrate": 993461,
+    "width": 1280,
+    "height": 720,
+    "fps": 25,
+    "quality": "hd720",
+    "qualityLabel": "720p",
+    "initRange": {
+     "start": "0",
+     "end": "739"
+    },
+    "indexRange": {
+     "start": "740",
+     "end": "1227"
+    },
+    "contentLength": "26455880",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "signatureCipher": "s=FIXTURESIG136FIXTURESIG136FIXTURESIG136FIXTURESIG136FIXTURESIG136FIXTURESIG136FIXTURESIG136FIXTURESIG136&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D136%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D26455880%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 247,
+    "mimeType": "video/webm; codecs=\"vp9\"",
+    "bitrate": 867871,
+    "averageBitrate": 664165,
+    "width": 1280,
+    "height": 720,
+    "fps": 25,
+    "quality": "hd720",
+    "qualityLabel": "720p",
+    "initRange": {
+     "start": "0",
+     "end": "219"
+    },
+    "indexRange": {
+     "start": "220",
+     "end": "860"
+    },
+    "contentLength": "17686717",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG247FIXTURESIG247FIXTURESIG247FIXTURESIG247FIXTURESIG247FIXTURESIG247FIXTURESIG247FIXTURESIG247&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D247%26source%3Dyoutube%26mime%3Dvideo%252Fwebm%26dur%3D213.040%26clen%3D17686717%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 398,
+    "mimeType": "video/mp4; codecs=\"av01.0.05M.08\"",
+    "bitrate": 1012348,
+    "averageBitrate": 660648,
+    "width": 1280,
+    "height": 720,
+    "fps": 25,
+    "quality": "hd720",
+    "qualityLabel": "720p",
+    "initRange": {
+     "start": "0",
+     "end": "699"
+    },
+    "indexRange": {
+     "start": "700",
+     "end": "1187"
+    },
+    "contentLength": "17593076",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG398FIXTURESIG398FIXTURESIG398FIXTURESIG398FIXTURESIG398FIXTURESIG398FIXTURESIG398FIXTURESIG398FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D398%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D17593076%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 135,
+    "mimeType": "video/mp4; codecs=\"avc1.4D401E\"",
+    "bitrate": 690764,
+    "averageBitrate": 529610,
+    "width": 854,
+    "height": 480,
+    "fps": 25,
+    "quality": "large",
+    "qualityLabel": "480p",
+    "initRange": {
+     "start": "0",
+     "end": "740"
+    },
+    "indexRange": {
+     "start": "741",
+     "end": "1228"
+    },
+    "contentLength": "14103519",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "signatureCipher": "s=FIXTURESIG135FIXTURESIG135FIXTURESIG135FIXTURESIG135FIXTURESIG135FIXTURESIG135FIXTURESIG135FIXTURESIG135FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D135%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D14103519%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 244,
+    "mimeType": "video/webm; codecs=\"vp9\"",
+    "bitrate": 466632,
+    "averageBitrate": 352289,
+    "width": 854,
+    "height": 480,
+    "fps": 25,
+    "quality": "large",
+    "qualityLabel": "480p",
+    "initRange": {
+     "start": "0",
+     "end": "219"
+    },
+    "indexRange": {
+     "start": "220",
+     "end": "857"
+    },
+    "contentLength": "9381481",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG244FIXTURESIG244FIXTURESIG244FIXTURESIG244FIXTURESIG244FIXTURESIG244FIXTURESIG244FIXTURESIG244FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D244%26source%3Dyoutube%26mime%3Dvideo%252Fwebm%26dur%3D213.040%26clen%3D9381481%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 397,
+    "mimeType": "video/mp4; codecs=\"av01.0.04M.08\"",
+    "bitrate": 525728,
+    "averageBitrate": 370815,
+    "width": 854,
+    "height": 480,
+    "fps": 25,
+    "quality": "large",
+    "qualityLabel": "480p",
+    "initRange": {
+     "start": "0",
+     "end": "699"
+    },
+    "indexRange": {
+     "start": "700",
+     "end": "1187"
+    },
+    "contentLength": "9874826",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG397FIXTURESIG397FIXTURESIG397FIXTURESIG397FIXTURESIG397FIXTURESIG397FIXTURESIG397FIXTURESIG397FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D397%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D9874826%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 134,
+    "mimeType": "video/mp4; codecs=\"avc1.4D401E\"",
+    "bitrate": 450863,
+    "averageBitrate": 315092,
+    "width": 640,
+    "height": 360,
+    "fps": 25,
+    "quality": "medium",
+    "qualityLabel": "360p",
+    "initRange": {
+     "start": "0",
+     "end": "740"
+    },
+    "indexRange": {
+     "start": "741",
+     "end": "1228"
+    },
+    "contentLength": "8390921",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "signatureCipher": "s=FIXTURESIG134FIXTURESIG134FIXTURESIG134FIXTURESIG134FIXTURESIG134FIXTURESIG134FIXTURESIG134FIXTURESIG134FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D134%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D8390921%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 243,
+    "mimeType": "video/webm; codecs=\"vp9\"",
+    "bitrate": 288453,
+    "averageBitrate": 225864,
+    "width": 640,
+    "height": 360,
+    "fps": 25,
+    "quality": "medium",
+    "qualityLabel": "360p",
+    "initRange": {
+     "start": "0",
+     "end": "219"
+    },
+    "indexRange": {
+     "start": "220",
+     "end": "857"
+    },
+    "contentLength": "6014765",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG243FIXTURESIG243FIXTURESIG243FIXTURESIG243FIXTURESIG243FIXTURESIG243FIXTURESIG243FIXTURESIG243&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D243%26source%3Dyoutube%26mime%3Dvideo%252Fwebm%26dur%3D213.040%26clen%3D6014765%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 396,
+    "mimeType": "video/mp4; codecs=\"av01.0.01M.08\"",
+    "bitrate": 304466,
+    "averageBitrate": 213502,
+    "width": 640,
+    "height": 360,
+    "fps": 25,
+    "quality": "medium",
+    "qualityLabel": "360p",
+    "initRange": {
+     "start": "0",
+     "end": "699"
+    },
+    "indexRange": {
+     "start": "700",
+     "end": "1187"
+    },
+    "contentLength": "5685561",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG396FIXTURESIG396FIXTURESIG396FIXTURESIG396FIXTURESIG396FIXTURESIG396FIXTURESIG396FIXTURESIG396FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D396%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D5685561%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 133,
+    "mimeType": "video/mp4; codecs=\"avc1.4D4015\"",
+    "bitrate": 236224,
+    "averageBitrate": 161852,
+    "width": 426,
+    "height": 240,
+    "fps": 25,
+    "quality": "small",
+    "qualityLabel": "240p",
+    "initRange": {
+     "start": "0",
+     "end": "739"
+    },
+    "indexRange": {
+     "start": "740",
+     "end": "1227"
+    },
+    "contentLength": "4310122",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "signatureCipher": "s=FIXTURESIG133FIXTURESIG133FIXTURESIG133FIXTURESIG133FIXTURESIG133FIXTURESIG133FIXTURESIG133FIXTURESIG133&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D133%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D4310122%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 242,
+    "mimeType": "video/webm; codecs=\"vp9\"",
+    "bitrate": 131647,
+    "averageBitrate": 101649,
+    "width": 426,
+    "height": 240,
+    "fps": 25,
+    "quality": "small",
+    "qualityLabel": "240p",
+    "initRange": {
+     "start": "0",
+     "end": "218"
+    },
+    "indexRange": {
+     "start": "219",
+     "end": "856"
+    },
+    "contentLength": "2706929",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG242FIXTURESIG242FIXTURESIG242FIXTURESIG242FIXTURESIG242FIXTURESIG242FIXTURESIG242FIXTURESIG242FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D242%26source%3Dyoutube%26mime%3Dvideo%252Fwebm%26dur%3D213.040%26clen%3D2706929%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 395,
+    "mimeType": "video/mp4; codecs=\"av01.0.00M.08\"",
+    "bitrate": 159709,
+    "averageBitrate": 116239,
+    "width": 426,
+    "height": 240,
+    "fps": 25,
+    "quality": "small",
+    "qualityLabel": "240p",
+    "initRange": {
+     "start": "0",
+     "end": "699"
+    },
+    "indexRange": {
+     "start": "700",
+     "end": "1187"
+    },
+    "contentLength": "3095447",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG395FIXTURESIG395FIXTURESIG395FIXTURESIG395FIXTURESIG395FIXTURESIG395FIXTURESIG395FIXTURESIG395FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D395%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D3095447%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 160,
+    "mimeType": "video/mp4; codecs=\"avc1.4D400C\"",
+    "bitrate": 109973,
+    "averageBitrate": 77286,
+    "width": 256,
+    "height": 144,
+    "fps": 25,
+    "quality": "tiny",
+    "qualityLabel": "144p",
+    "initRange": {
+     "start": "0",
+     "end": "738"
+    },
+    "indexRange": {
+     "start": "739",
+     "end": "1226"
+    },
+    "contentLength": "2058142",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "signatureCipher": "s=FIXTURESIG160FIXTURESIG160FIXTURESIG160FIXTURESIG160FIXTURESIG160FIXTURESIG160FIXTURESIG160FIXTURESIG160FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D160%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D2058142%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 278,
+    "mimeType": "video/webm; codecs=\"vp9\"",
+    "bitrate": 68500,
+    "averageBitrate": 57861,
+    "width": 256,
+    "height": 144,
+    "fps": 25,
+    "quality": "tiny",
+    "qualityLabel": "144p",
+    "initRange": {
+     "start": "0",
+     "end": "217"
+    },
+    "indexRange": {
+     "start": "218",
+     "end": "854"
+    },
+    "contentLength": "1540844",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG278FIXTURESIG278FIXTURESIG278FIXTURESIG278FIXTURESIG278FIXTURESIG278FIXTURESIG278FIXTURESIG278&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D278%26source%3Dyoutube%26mime%3Dvideo%252Fwebm%26dur%3D213.040%26clen%3D1540844%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 394,
+    "mimeType": "video/mp4; codecs=\"av01.0.00M.08\"",
+    "bitrate": 83289,
+    "averageBitrate": 56534,
+    "width": 256,
+    "height": 144,
+    "fps": 25,
+    "quality": "tiny",
+    "qualityLabel": "144p",
+    "initRange": {
+     "start": "0",
+     "end": "699"
+    },
+    "indexRange": {
+     "start": "700",
+     "end": "1187"
+    },
+    "contentLength": "1505504",
+    "approxDurationMs": "213040",
+    "projectionType": "RECTANGULAR",
+    "colorInfo": {
+     "primaries": "COLOR_PRIMARIES_BT709",
+     "transferCharacteristics": "COLOR_TRANSFER_CHARACTERISTICS_BT709",
+     "matrixCoefficients": "COLOR_MATRIX_COEFFICIENTS_BT709"
+    },
+    "signatureCipher": "s=FIXTURESIG394FIXTURESIG394FIXTURESIG394FIXTURESIG394FIXTURESIG394FIXTURESIG394FIXTURESIG394FIXTURESIG394FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D394%26source%3Dyoutube%26mime%3Dvideo%252Fmp4%26dur%3D213.040%26clen%3D1505504%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 140,
+    "mimeType": "audio/mp4; codecs=\"mp4a.40.2\"",
+    "bitrate": 130677,
+    "averageBitrate": 129502,
+    "quality": "tiny",
+    "initRange": {
+     "start": "0",
+     "end": "722"
+    },
+    "indexRange": {
+     "start": "723",
+     "end": "1018"
+    },
+    "contentLength": "3449447",
+    "approxDurationMs": "213089",
+    "audioQuality": "AUDIO_QUALITY_MEDIUM",
+    "audioSampleRate": "44100",
+    "audioChannels": 2,
+    "projectionType": "RECTANGULAR",
+    "loudnessDb": 0.9899998,
+    "signatureCipher": "s=FIXTURESIG140FIXTURESIG140FIXTURESIG140FIXTURESIG140FIXTURESIG140FIXTURESIG140FIXTURESIG140FIXTURESIG140&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D140%26source%3Dyoutube%26mime%3Daudio%252Fmp4%26dur%3D213.089%26clen%3D3449447%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 249,
+    "mimeType": "audio/webm; codecs=\"opus\"",
+    "bitrate": 49496,
+    "averageBitrate": 46234,
+    "quality": "tiny",
+    "initRange": {
+     "start": "0",
+     "end": "258"
+    },
+    "indexRange": {
+     "start": "259",
+     "end": "628"
+    },
+    "contentLength": "1231355",
+    "approxDurationMs": "213061",
+    "audioQuality": "AUDIO_QUALITY_LOW",
+    "audioSampleRate": "48000",
+    "audioChannels": 2,
+    "projectionType": "RECTANGULAR",
+    "loudnessDb": 0.97999954,
+    "signatureCipher": "s=FIXTURESIG249FIXTURESIG249FIXTURESIG249FIXTURESIG249FIXTURESIG249FIXTURESIG249FIXTURESIG249FIXTURESIG249FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D249%26source%3Dyoutube%26mime%3Daudio%252Fwebm%26dur%3D213.061%26clen%3D1231355%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 250,
+    "mimeType": "audio/webm; codecs=\"opus\"",
+    "bitrate": 65508,
+    "averageBitrate": 61149,
+    "quality": "tiny",
+    "initRange": {
+     "start": "0",
+     "end": "258"
+    },
+    "indexRange": {
+     "start": "259",
+     "end": "629"
+    },
+    "contentLength": "1628559",
+    "approxDurationMs": "213061",
+    "audioQuality": "AUDIO_QUALITY_LOW",
+    "audioSampleRate": "48000",
+    "audioChannels": 2,
+    "projectionType": "RECTANGULAR",
+    "loudnessDb": 0.97999954,
+    "signatureCipher": "s=FIXTURESIG250FIXTURESIG250FIXTURESIG250FIXTURESIG250FIXTURESIG250FIXTURESIG250FIXTURESIG250FIXTURESIG250FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D250%26source%3Dyoutube%26mime%3Daudio%252Fwebm%26dur%3D213.061%26clen%3D1628559%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   },
+   {
+    "itag": 251,
+    "mimeType": "audio/webm; codecs=\"opus\"",
+    "bitrate": 136544,
+    "averageBitrate": 128930,
+    "quality": "tiny",
+    "initRange": {
+     "start": "0",
+     "end": "258"
+    },
+    "indexRange": {
+     "start": "259",
+     "end": "629"
+    },
+    "contentLength": "3433755",
+    "approxDurationMs": "213061",
+    "audioQuality": "AUDIO_QUALITY_MEDIUM",
+    "audioSampleRate": "48000",
+    "audioChannels": 2,
+    "projectionType": "RECTANGULAR",
+    "loudnessDb": 0.97999954,
+    "signatureCipher": "s=FIXTURESIG251FIXTURESIG251FIXTURESIG251FIXTURESIG251FIXTURESIG251FIXTURESIG251FIXTURESIG251FIXTURESIG251FIXT&sp=sig&url=https%3A%2F%2Frr1---sn-fixture.googlevideo.com%2Fvideoplayback%3Fexpire%3D1767225600%26id%3Do-FIXTUREFIXTUREFIXTURE%26itag%3D251%26source%3Dyoutube%26mime%3Daudio%252Fwebm%26dur%3D213.061%26clen%3D3433755%26n%3DFixtureNChallenge01%26sparams%3Dexpire%252Cid%252Citag%252Csource%252Cmime%252Cdur%252Cclen%252Cn"
+   }
+  ]
+ },
+ "videoDetails": {
+  "videoId": "cipherFixt1",
+  "title": "Fixture video with ciphered formats",
+  "lengthSeconds": "213",
+  "author": "Fixture channel",
+  "isLiveContent": false
+ }
+}

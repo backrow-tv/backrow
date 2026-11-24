@@ -17,4 +17,12 @@ https://github.com/google/desugar_jdk_libs (see docs/adr/0011).
 Third-party code copied into this repository (permissive licenses only)
 is listed below with its origin and license. Keep this list current.
 
-  (none yet)
+  core/innertube/src/main/resources/dk/backrow/core/innertube/ejs/
+    yt.solver.core.min.js and yt.solver.lib.min.js: unmodified release files of
+    yt-dlp/ejs 0.8.0 (https://github.com/yt-dlp/ejs), Unlicense (ADR-0009).
+    yt.solver.lib.min.js bundles, with their licence texts in its header:
+      meriyah 6.1.4, Copyright (c) 2019 and later, KFlash and others. ISC License.
+      astring 1.9.0, Copyright (c) 2015, David Bonnet. MIT License.
+
+The Android app also ships QuickJS (MIT, Copyright Fabrice Bellard and Charlie
+Gordon) inside io.github.dokar3:quickjs-kt-android (Apache-2.0); see ADR-0009.

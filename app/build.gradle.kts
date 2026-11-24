@@ -76,6 +76,7 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:innertube"))
     implementation(project(":core:player"))
+    implementation(project(":core:jsengine"))
     implementation(project(":core:sponsorblock"))
     implementation(project(":core:data"))
 
@@ -91,6 +92,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.serialization.core)
+    implementation(platform(libs.kotlinx.coroutines.bom))
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.androidx.media3.ui.compose)
 
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.android)

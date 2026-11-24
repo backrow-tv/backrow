@@ -31,6 +31,8 @@ kotlin {
 
 dependencies {
     coreLibraryDesugaring(libs.desugar.jdk.libs)
-    implementation(project(":core:model"))
+    api(project(":core:model"))
+    api(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
     testImplementation(libs.junit)
 }
