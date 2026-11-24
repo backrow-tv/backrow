@@ -1,0 +1,113 @@
+# Copyright 2026 The Backrow contributors
+# SPDX-License-Identifier: Apache-2.0
+
+# Nightly canary (ADR-0007): runs the live-YouTube tests in :core:innertube against the real
+# player path (/tv session, TV player JS, one player request per profile in the playback chain,
+# EJS challenge solving, the first kilobyte of a solved stream) and opens or updates an issue
+# labelled youtube-breakage when they fail, so breakage is found before users report it.
+#
+# Every `uses:` is pinned to a commit SHA (ADR-0007); the comment names the release it is.
+name: Canary
+
+on:
+  schedule:
+    # 03:17 UTC daily: off the hour, when GitHub's scheduler is least loaded.
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: canary
+  cancel-in-progress: false
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      summary: ${{ steps.summary.outputs.summary }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      # The live tests run the bundled EJS solver in node (NodeJsRuntime, test code only).
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
+        with:
+          validate-wrappers: true
+
+      # A pure-JVM task: no Android SDK needed.
+      - name: Live YouTube tests
+        env:
+          BACKROW_LIVE_TESTS: "1"
+        run: ./gradlew --no-daemon --stacktrace :core:innertube:liveTest
+
+      # Also fails the job if every test was skipped, so a canary that checked nothing is not green.
+      - name: Summarise results
+        id: summary
+        if: always()
+        run: |
+          status=0
+          python3 .github/scripts/canary_summary.py core/innertube/build/test-results/liveTest summary.md || status=$?
+          cat summary.md >> "$GITHUB_STEP_SUMMARY"
+          delimiter="EOF_$(openssl rand -hex 16)"
+          { echo "summary<<$delimiter"; cat summary.md; echo "$delimiter"; } >> "$GITHUB_OUTPUT"
+          exit $status
+
+  # A separate job, so the token that can write issues never sits next to the Gradle build.
+  report:
+    needs: live
+    if: always() && (needs.live.result == 'success' || needs.live.result == 'failure')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RESULT: ${{ needs.live.result }}
+      SUMMARY: ${{ needs.live.outputs.summary }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      LABEL: youtube-breakage
+    steps:
+      - name: Open, update or note recovery on the youtube-breakage issue
+        run: |
+          gh label create "$LABEL" --color B60205 \
+            --description "The nightly canary found YouTube breaking the player path" --force
+          issue=$(gh issue list --label "$LABEL" --state open --limit 1 --json number --jq '.[0].number // empty')
+
+          if [ "$RESULT" = "failure" ]; then
+            {
+              echo "The nightly canary failed on $(date -u +%Y-%m-%d) at commit \`${GITHUB_SHA::7}\`."
+              echo
+              echo "Run: $RUN_URL"
+              echo
+              printf '%s\n' "${SUMMARY:-No summary: the job failed before the tests ran. See the run log.}"
+              echo
+              echo "Fixes go into \`:core:innertube\` with a fixture and a dated entry in docs/INNERTUBE-CHANGELOG.md."
+            } > body.md
+            if [ -n "$issue" ]; then
+              gh issue comment "$issue" --body-file body.md
+            else
+              gh issue create --title "Canary: YouTube playback path broken" --label "$LABEL" --body-file body.md
+            fi
+          elif [ -n "$issue" ]; then
+            # Not closed automatically: the maintainer decides whether the breakage is understood.
+            # Said once per recovery, not every night the issue stays open.
+            last=$(gh issue view "$issue" --json comments --jq '.comments[-1].body // ""')
+            case "$last" in
+              "The canary passed again"*) ;;
+              *) gh issue comment "$issue" --body "The canary passed again on $(date -u +%Y-%m-%d): $RUN_URL" ;;
+            esac
+          fi
