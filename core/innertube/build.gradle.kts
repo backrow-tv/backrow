@@ -6,6 +6,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 // Pure Kotlin/JVM module: no Android SDK on the classpath (CLAUDE.md module rules).
 plugins {
     alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 // Compiled by JDK 21 (the project toolchain) to Java 17 bytecode, the same level the
@@ -17,8 +18,15 @@ kotlin {
 tasks.withType<JavaCompile>().configureEach { options.release.set(17) }
 
 dependencies {
-    implementation(project(":core:model"))
+    api(project(":core:model"))
+    implementation(libs.okhttp)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(platform(libs.kotlinx.coroutines.bom))
+    implementation(libs.kotlinx.coroutines.core)
+
     testImplementation(libs.junit)
+    testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 // Android modules call their unit tests "testDebugUnitTest". This alias makes the documented
