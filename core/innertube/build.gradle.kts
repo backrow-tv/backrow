@@ -29,6 +29,36 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
 }
 
+// Live tests against the real YouTube (ADR-0007 canary). A source set of their own, so the unit
+// test run (`test`, `testDebugUnitTest`, `check`) never compiles or runs them; CLAUDE.md rule 6.
+// They also skip themselves unless BACKROW_LIVE_TESTS=1. Run with:
+//   BACKROW_LIVE_TESTS=1 ./gradlew :core:innertube:liveTest
+// They solve challenges with `node` (on the PATH, or BACKROW_NODE) instead of QuickJS.
+val liveTest: SourceSet = sourceSets.create("liveTest")
+// Same-module access to internal classes (InnertubeHttp, ChallengeSolver, ...).
+kotlin.target.compilations.getByName("liveTest").associateWith(kotlin.target.compilations.getByName("main"))
+configurations.named("liveTestImplementation") { extendsFrom(configurations.implementation.get()) }
+
+dependencies {
+    "liveTestImplementation"(libs.junit)
+}
+
+tasks.register<Test>("liveTest") {
+    group = "verification"
+    description = "Runs the live YouTube canary tests (skipped unless BACKROW_LIVE_TESTS=1)."
+    testClassesDirs = liveTest.output.classesDirs
+    classpath = liveTest.runtimeClasspath
+    useJUnit()
+    // The result depends on YouTube today, not on the inputs: never up to date, never cached.
+    outputs.upToDateWhen { false }
+    outputs.cacheIf { false }
+    testLogging {
+        events("passed", "skipped", "failed")
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.SHORT
+        showStandardStreams = true
+    }
+}
+
 // Android modules call their unit tests "testDebugUnitTest". This alias makes the documented
 // `./gradlew testDebugUnitTest` (CLAUDE.md, CI) run this module's tests too.
 tasks.register("testDebugUnitTest") {

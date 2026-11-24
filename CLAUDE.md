@@ -101,6 +101,7 @@ When copying anything non-trivial from a permissive source, keep its license hea
 ./gradlew lint                               # Android lint
 ./gradlew licensee                           # dependency license check (report: app/build/reports/licensee/)
 ./gradlew :app:connectedDebugAndroidTest     # Compose UI tests on a connected TV or emulator
+BACKROW_LIVE_TESTS=1 ./gradlew :core:innertube:liveTest  # live YouTube canary tests (need node; nightly in canary.yml)
 adb connect <tv-ip>:5555                     # once per TV
 ./gradlew :app:installDebug                  # install on the connected TV
 adb shell am start -n dk.backrow.debug/dk.backrow.MainActivity
