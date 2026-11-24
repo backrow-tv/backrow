@@ -12,3 +12,12 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.licensee) apply false
 }
+
+// Reproducible builds (ADR-0007, docs/RELEASE-PROCESS.md §3.3): archives get fixed timestamps
+// and a stable file order, so the same tag builds the same bytes on any machine.
+subprojects {
+    tasks.withType<AbstractArchiveTask>().configureEach {
+        isPreserveFileTimestamps = false
+        isReproducibleFileOrder = true
+    }
+}

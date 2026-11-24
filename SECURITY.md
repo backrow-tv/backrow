@@ -20,6 +20,24 @@ If any of these is ever untrue, that is a vulnerability; report it.
 
 Only the latest stable and the latest beta receive fixes.
 
-## If the signing key is ever compromised
+## Verifying a release
 
-We will say so within 24 hours on the repository README and the releases page, publish indicators, and ship under a new applicationId if the key cannot be trusted (see `docs/adr/0007-release-signing-canary-pipeline.md`). We will not quietly rotate and hope.
+Every release has `SHA256SUMS` and a build-provenance attestation. With the APK and `SHA256SUMS` downloaded from the release page:
+
+```sh
+sha256sum -c SHA256SUMS
+gh attestation verify backrow-<version>.apk -R backrow-tv/backrow
+apksigner verify --print-certs backrow-<version>.apk
+```
+
+The `SHA-256 digest` that `apksigner` prints must equal the release certificate digest in the README. Android also refuses an update signed by any other key.
+
+## If the signing key, the maintainer's account or a release is ever compromised
+
+We will not quietly rotate and hope. The playbook, written before the first release (ADR-0007):
+
+1. **Within 1 hour:** revoke access. Delete the `release` environment's secrets, rotate the maintainer's GitHub credentials and hardware keys, and review the organisation's members, deploy keys and tokens.
+2. **Within 24 hours:** announce on the README, in a pinned issue and on the releases page. Say which releases are affected, give the SHA-256 of every known-bad APK, and say what users should do.
+3. **Mark bad releases.** Say so in their notes, delete their assets, and keep the notes as a record.
+4. **New key.** If the key itself leaked, ship under a new applicationId (ADR-0001). Users must uninstall and install the new app, because Android does not update across signing keys. APK Signature Scheme v3 rotation only helps when the old key is still trusted, so it is for planned rotation, never for a compromise.
+5. **Publish** indicators (hashes, attestation IDs, dates) and a post-mortem.

@@ -1,0 +1,266 @@
+# Copyright 2026 The Backrow contributors
+# SPDX-License-Identifier: Apache-2.0
+
+# Release pipeline (ADR-0007, docs/RELEASE-PROCESS.md). Release APKs are built here and nowhere else.
+#
+#   tag vX.Y.Z or vX.Y.Z-beta.N (on main, with a CHANGELOG.md section)
+#     → version   checks the tag and works out the version
+#     → build ×2  two independent unsigned builds, no secrets, no Gradle cache
+#     → compare   the two must be byte-identical (reproducible builds)
+#     → sign      `release` environment: waits for the maintainer's approval, holds the key,
+#                 read-only token; signs, checks the certificate digest
+#     → publish   no secrets; SHA256SUMS, build-provenance attestation, GitHub Release
+#
+# Run by hand (workflow_dispatch) it is a dry run: the same build, compare and sign with the real
+# key and digest check, but nothing is uploaded or published. Use it to check the secrets.
+#
+# Every `uses:` is pinned to a commit SHA; the comment names the release.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  # Latest stable build-tools on 2026-11-24, for zipalign and apksigner.
+  BUILD_TOOLS: "37.0.0"
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
+      dry_run: ${{ steps.version.outputs.dry_run }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # to check that the tag is on main
+          persist-credentials: false
+
+      - name: Work out the version
+        id: version
+        env:
+          EVENT: ${{ github.event_name }}
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [ "$EVENT" = "push" ]; then
+            if [ "$REF_TYPE" != "tag" ]; then echo "::error::Releases start from a tag."; exit 1; fi
+            version="${REF_NAME#v}"
+            if ! echo "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-beta\.[0-9]+)?$'; then
+              echo "::error::Tag $REF_NAME is not vX.Y.Z or vX.Y.Z-beta.N."; exit 1
+            fi
+            if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+              echo "::error::Tag $REF_NAME is not on main. Only merged, reviewed commits are released."; exit 1
+            fi
+            if ! python3 .github/scripts/release_notes.py "$version" > /dev/null; then
+              echo "::error::CHANGELOG.md has no section for $version."; exit 1
+            fi
+            dry_run=false
+          else
+            version="0.0.0-beta.1"
+            dry_run=true
+          fi
+          case "$version" in *-beta.*) prerelease=true ;; *) prerelease=false ;; esac
+          {
+            echo "version=$version"
+            echo "prerelease=$prerelease"
+            echo "dry_run=$dry_run"
+          } >> "$GITHUB_OUTPUT"
+          echo "Version $version (prerelease: $prerelease, dry run: $dry_run)" >> "$GITHUB_STEP_SUMMARY"
+
+  # Two independent builds of the same commit. Only the first runs the checks.
+  build:
+    needs: version
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      matrix:
+        attempt: [1, 2]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
+        with:
+          packages: platform-tools
+
+      # cache-disabled: a release never reads a cache that a PR build could have written.
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
+        with:
+          validate-wrappers: true
+          cache-disabled: true
+
+      - name: Build the unsigned release APK
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+          ATTEMPT: ${{ matrix.attempt }}
+        run: |
+          checks=""
+          if [ "$ATTEMPT" = "1" ]; then checks="lint testDebugUnitTest licensee"; fi
+          ./gradlew --no-daemon --no-build-cache --stacktrace $checks :app:assembleRelease -Pbackrow.version="$VERSION"
+          sha256sum app/build/outputs/apk/release/app-release-unsigned.apk | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: unsigned-${{ matrix.attempt }}
+          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          if-no-files-found: error
+          retention-days: 7
+
+  compare:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: unsigned-*
+
+      - name: The two builds must be identical
+        run: |
+          sha256sum unsigned-1/app-release-unsigned.apk unsigned-2/app-release-unsigned.apk
+          if ! cmp unsigned-1/app-release-unsigned.apk unsigned-2/app-release-unsigned.apk; then
+            echo "::error::The two builds differ: the release build is not reproducible."
+            exit 1
+          fi
+
+  # The only job that sees the signing key. Read-only token; uploads only the signed APK.
+  sign:
+    needs: [version, compare]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: release
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: unsigned-1
+          path: unsigned
+
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
+        with:
+          packages: build-tools;${{ env.BUILD_TOOLS }}
+
+      - name: Sign and check the certificate
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+          RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
+          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          EXPECTED_CERT_SHA256: ${{ vars.RELEASE_CERT_SHA256 }}
+        run: |
+          set -euo pipefail
+          for name in RELEASE_KEYSTORE_BASE64 RELEASE_KEYSTORE_PASSWORD RELEASE_KEY_ALIAS EXPECTED_CERT_SHA256; do
+            if [ -z "${!name}" ]; then echo "::error::$name is not set in the release environment."; exit 1; fi
+          done
+          bt="$ANDROID_HOME/build-tools/$BUILD_TOOLS"
+          umask 077
+          ks="$RUNNER_TEMP/release.p12"
+          printf '%s' "$RELEASE_KEYSTORE_BASE64" | base64 -d > "$ks"
+
+          # AGP already aligns the APK (16 KB pages for the native libraries); align only if not.
+          in=unsigned/app-release-unsigned.apk
+          aligned="$RUNNER_TEMP/aligned.apk"
+          if "$bt/zipalign" -c -P 16 4 "$in" > /dev/null; then cp "$in" "$aligned"; else "$bt/zipalign" -P 16 -f 4 "$in" "$aligned"; fi
+
+          # Passwords reach apksigner through the environment, never the command line.
+          # minSdk 25 needs no v1 (JAR) signature; v3 allows a planned key rotation later.
+          out="backrow-$VERSION.apk"
+          "$bt/apksigner" sign \
+            --ks "$ks" --ks-type PKCS12 --ks-key-alias "$RELEASE_KEY_ALIAS" \
+            --ks-pass env:RELEASE_KEYSTORE_PASSWORD --key-pass env:RELEASE_KEYSTORE_PASSWORD \
+            --v1-signing-enabled false --v2-signing-enabled true --v3-signing-enabled true --v4-signing-enabled false \
+            --out "$out" "$aligned"
+          rm -f "$ks"
+
+          # Exactly one signer, and it is the release certificate.
+          certs=$("$bt/apksigner" verify --print-certs "$out")
+          signers=$(echo "$certs" | grep -c 'certificate SHA-256 digest:' || true)
+          digest=$(echo "$certs" | sed -n 's/^Signer #1 certificate SHA-256 digest: //p' | tr -d ': ' | tr 'A-F' 'a-f')
+          expected=$(echo "$EXPECTED_CERT_SHA256" | tr -d ': ' | tr 'A-F' 'a-f')
+          if [ "$signers" != "1" ] || [ "$digest" != "$expected" ]; then
+            echo "::error::Signed with an unexpected certificate ($signers signer(s), digest $digest)."
+            exit 1
+          fi
+          echo "Signed with the release certificate $digest" >> "$GITHUB_STEP_SUMMARY"
+          sha256sum "$out" > SHA256SUMS
+          cat SHA256SUMS >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Remove the keystore
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.p12"
+
+      # A dry run uploads nothing: no APK signed with the release key exists outside a release.
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: needs.version.outputs.dry_run == 'false'
+        with:
+          name: signed
+          path: |
+            backrow-*.apk
+            SHA256SUMS
+          if-no-files-found: error
+          retention-days: 7
+
+  # No secrets here; the only job that can write: the release, and its attestation.
+  publish:
+    needs: [version, sign]
+    if: needs.version.outputs.dry_run == 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: signed
+          path: signed
+
+      - name: Check the checksums
+        working-directory: signed
+        run: sha256sum -c SHA256SUMS
+
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: signed/backrow-*.apk
+
+      - name: Create the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          VERSION: ${{ needs.version.outputs.version }}
+          PRERELEASE: ${{ needs.version.outputs.prerelease }}
+          CERT_SHA256: ${{ vars.RELEASE_CERT_SHA256 }}
+        run: |
+          {
+            python3 .github/scripts/release_notes.py "$VERSION"
+            echo
+            echo "---"
+            echo "Built by GitHub Actions from \`$TAG\`. Signing certificate SHA-256: \`$CERT_SHA256\`."
+            echo "Verify the download: see SECURITY.md (\"Verifying a release\")."
+          } > notes.md
+          flags=""
+          if [ "$PRERELEASE" = "true" ]; then flags="--prerelease"; fi
+          gh release create "$TAG" signed/backrow-*.apk signed/SHA256SUMS \
+            --verify-tag --title "Backrow $VERSION" --notes-file notes.md $flags
